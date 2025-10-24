@@ -6,7 +6,7 @@
 /*   By: kael-mal <kael-mal@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 12:29:46 by kael-mal          #+#    #+#             */
-/*   Updated: 2025/10/22 19:05:28 by kael-mal         ###   ########.fr       */
+/*   Updated: 2025/10/23 10:27:23 by kael-mal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_buffer(char *next_ret, char *buf, size_t newline_index, size_t bufsize)
 		i++;
 	}
 	next_ret[i] = '\0';
-	free (buf);
+	// free (buf);
 	return (next_ret);
 }
 
@@ -65,7 +65,7 @@ char	*ft_strjoinn(char *line, char *buf, size_t newline_index)
 		line_len++;
 	}
 	ret[line_len] = '\0';
-	free(buf);
+	// free(buf);
 	return (ret);
 }
 
@@ -85,7 +85,7 @@ char	*ft_strnjoin(char *line, char *buf, size_t bufsize)
 		ret[i] = line[i];
 		i++;
 	}
-	free(line);
+	// free(line);
 	i = 0;
 	while (i < bufsize)
 	{
@@ -93,7 +93,7 @@ char	*ft_strnjoin(char *line, char *buf, size_t bufsize)
 		i++;
 		line_len++;
 	}
-	free(buf);
+	// free(buf);
 	ret[line_len] = '\0';
 	return (ret);
 }
@@ -121,11 +121,13 @@ char	*get_next_line(int fd)
 	char		*ret;
 
 	newline_index = -1;
+	ret = malloc(1);
+	ret[0] = 0;
 	if (next_ret)
 		ret = next_ret;
 	bufsize = read(fd, buf, BUFFER_SIZE);
 	newline_index = check_newline((char *)buf, bufsize);
-	while (newline_index < 0)
+	if (newline_index < 0)
 	{
 		ret = ft_strnjoin(ret, (char *)buf, bufsize);
 		ret = get_next_line(fd);
